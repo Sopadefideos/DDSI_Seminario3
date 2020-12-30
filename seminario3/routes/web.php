@@ -14,5 +14,7 @@ use App\Http\Controllers\NameController;
 |
 */
 
+
 Route::get('/', [NameController::class, 'index'])->name('index');
 
+Route::post('/', [NameController::class, 'store'])->name('add');

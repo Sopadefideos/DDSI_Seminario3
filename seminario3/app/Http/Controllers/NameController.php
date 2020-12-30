@@ -8,19 +8,29 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Route;
 
+use App\Models\Name;
+
+use Illuminate\Support\Facades\Schema;
+
+
 class NameController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        
-        $nombres = DB::table('names')->get();
+    {   
+        if(!Schema::hasTable('names')){
 
-        return view('index', compact('nombres'));
+            return view('index');
+        }else{
+            $nombres = DB::table('names')->get();
+            return view('index', compact('nombres'));
+        }
+       
     }
 
     /**
@@ -41,7 +51,16 @@ class NameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    
+
+        $nombreNuevo = new Name;
+        $nombreNuevo->name = $request->nombre;
+        $nombreNuevo->save();
+        
+ 
+        return redirect()->route('index');
+        
+       
     }
 
     /**
@@ -88,4 +107,5 @@ class NameController extends Controller
     {
         //
     }
+
 }
