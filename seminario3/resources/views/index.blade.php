@@ -17,20 +17,27 @@
     <h1>Seminario3!</h1>
     <div class="card">
         <div class="card-body">
-            <form action="">
+            <form action="{{ route('add') }}" method="POST">
+                @csrf
                 <div class="mb-3">
                     <label class="form-label">Nombre</label>
-                    <input type="email" class="form-control" name="nombre">
+                    <input type="text" class="form-control" name="nombre">
                 </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
 
         <ul class="list-group">
-            @forelse ($nombres as $nombre):
-                <li class="list-group-item">{{ $nombre->name }}</li>
-            @empty 
+            @isset($nombres):
+                @forelse ($nombres as $nombre):
+                    <li class="list-group-item">{{ $nombre->name }}</li>
+                @empty 
+                    <li class="list-group-item">No hay ningun nombre para listar</li>
+                @endforelse
+            @else:
                 <li class="list-group-item">No hay ningun nombre para listar</li>
-            @endforelse
+            @endisset
+
         </ul>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
